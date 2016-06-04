@@ -1,12 +1,21 @@
 <?php session_start();?>
-   	<?php   
-       $style_path = 'css/style.css';   
-       $version = filemtime( $style_path);   
-       echo "<link rel='stylesheet' property='stylesheet' href='$style_path?ver=$version'>";  
-   	?>
-   	<link type="text/css" property='stylesheet' rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" property='stylesheet' href="font-awesome-4.6.3/css/font-awesome.min.css">
+<!DOCTYPE HTML>
+<html>
+	<head>
+	   <meta charset="utf-8">
+       <title>header</title>
+       <link type="text/css" rel="stylesheet" href="css/style.css">
+       <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
+       <?php   
+           $style_path = 'css/style.css';   
+           $version = filemtime( $style_path);   
+           echo "<link rel='stylesheet' href='$style_path?ver=$version'>";  
+         ?>
+	</head>
+	<body>
+
 	<div class = "container ">
+
 		  <div class = "row w3-theme-l3">
 		  	<div class="col-sm-4">
 		  		<!-- logo -->
@@ -22,6 +31,8 @@
 			<br>
 	    </div>
 			<div class = "row">
+			    <!-- <div class="col-sm-12"> -->
+				<!-- navbar -->
 					<nav class="nav">
 							<ul>
 							<li><a href="index.php">Home</a></li>
@@ -44,5 +55,9 @@
 							?>
 							</ul>
 					</nav>
+				<!-- </div> -->
 			</div>
+			
 	</div>
+	</body>
+</html>

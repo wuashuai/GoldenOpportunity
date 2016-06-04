@@ -1,5 +1,4 @@
 <?php
-session_start();
 if (isset($_SESSION['logged_user'])) {
 	$olduser = $_SESSION['logged_user'];
 	header('Location:index.php');
@@ -33,6 +32,7 @@ if (isset($_SESSION['logged_user'])) {
 			unset( $_SESSION );
 			$_SESSION = array();
 			session_destroy();
+			header('Location:index.php');
 		}
 	?>
 
@@ -40,29 +40,53 @@ if (isset($_SESSION['logged_user'])) {
 		$username = filter_input( INPUT_POST, 'username', FILTER_SANITIZE_STRING );
 		$password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING );
 		if (empty($username) || empty($password)) {
-			$hash = password_hash( "admin123", PASSWORD_DEFAULT);
-			echo $hash;
+		
 	?>
+    <div class = "container">
+            <div class = "row">
+            	<br>
+            	  <div class = "col-sm-1">
+            	  </div>
+            	  <div class = "col-sm-5">
+	                  <h3>&nbsp;&nbsp;<i class="fa fa-sign-in"></i>&nbsp;&nbsp; Log in</h3>
+                       <div class = "logform">
+						<form action="login.php" method="post">
 
-	<h2>Log in</h2>
-
-	<form action="login.php" method="post">
-
-		Username: <input type="text" name="username"> <br>
-		Password: <input type="password" name="password"> <br>
-		<input type="submit" value="Submit">
-	</form>
+							Username: <input type="text" name="username"> <br>
+							Password: <input type="password" name="password"> <br>
+							<input type="submit" value="login" name ="login">
+						</form>
+                        </div>
+                    </div>
+                   <div class = "col-sm-5"> 
+                   	<h3>&nbsp;&nbsp;<i class="fa fa-motorcycle"></i>&nbsp;&nbsp; Not a user? Register now!</h3>
+						
+					  <div class = "logform">
+						<form action="register.php" method="post">
+							Username: <input type="text" name="username1"> <br>
+							Password: <input type="password" name="password1"> <br>
+							<input type="submit" value="register" name ="register">
+						</form>
+					   </div>
+					</div>
+					<div class = "col-sm-1">
+            	    </div>
+            	</div>
+            </div>
 
 	<?php
 		} else {
 		
-			$sql = "SELECT password FROM admin WHERE username = '$username'";
+			$sql = "SELECT password, type FROM admin WHERE username = '$username'";
 			$users = $mysqli->query($sql);
 
 			if ($users->num_rows == 1) {
 				$user = $users->fetch_assoc();
 				if(password_verify($password,$user['password'])){
+					
 					$_SESSION['logged_user'] = $username;
+					$_SESSION['type'] = $user['type'];
+
 					echo '<p>cool you have login</p>';
 					
 					header('Location:index.php');
